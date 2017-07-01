@@ -16,6 +16,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 
 /**
@@ -58,7 +59,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>
         holder.TVbody.setText(tweet.body);
         holder.TVcreated.setText(tweet.relativeDate);
         holder.TVhandle.setText(tweet.user.screenName);
-        Glide.with(context).load(tweet.user.profileImageUrl).into(holder.IVprofileImage);
+        Glide.with(context).load(tweet.user.profileImageUrl).bitmapTransform(new RoundedCornersTransformation(context, 45, 0)).into(holder.IVprofileImage);
 
     }
 

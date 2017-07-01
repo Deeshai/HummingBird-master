@@ -54,7 +54,8 @@
         android:layout_below="@id/TVbody"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:background="@android:color/holo_green_light"/>
+        android:background="@android:color/holo_green_light"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

@@ -70,7 +70,7 @@ public class ComposeActivity extends AppCompatActivity
                 BThum.setBackgroundColor(Color.parseColor("#ab99cc00"));
                 BThum.setClickable(false);
 
-                Toast.makeText(ComposeActivity.this, "Too much humming", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ComposeActivity.this, "Too much humming",Toast.LENGTH_SHORT).show();
             }
             else
             {
