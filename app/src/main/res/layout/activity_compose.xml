@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.codepath.apps.restclienttemplate.ComposeActivity">
+
+    <ImageButton
+        android:id="@+id/IBcloseCompose"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/IVprofileImageCompose"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:onClick="CloseComposed"
+        app:srcCompat="@drawable/ic_vector_close" />
+
+    <ImageView
+        android:id="@+id/IVprofileImageCompose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/ETtweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/IBcloseCompose"
+        android:ems="10"
+        android:hint="What's Happening?"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/BThum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/ETtweet"
+        android:background="#ff99cc00"
+        android:layout_marginLeft="5dp"
+        android:textColor="#ffffff"
+        android:onClick="Hum"
+        android:text="HUM" />
+
+    <TextView
+        android:id="@+id/TVcharCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="140"
+        android:layout_alignBaseline="@+id/BThum"
+        android:layout_alignBottom="@+id/BThum"
+        android:layout_toStartOf="@+id/BThum" />
+
+
+</RelativeLayout>
