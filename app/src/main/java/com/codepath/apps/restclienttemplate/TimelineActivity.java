@@ -32,7 +32,7 @@ public class TimelineActivity extends AppCompatActivity {
 
 
     private static final int REQUEST_CODE = 20 ;
-    private SwipeRefreshLayout swipeContainer;
+    //private SwipeRefreshLayout swipeContainer;
     Menu  menu;
 
     @Override
@@ -114,6 +114,7 @@ public class TimelineActivity extends AppCompatActivity {
         //launch the profile view
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
+
     }
 }
 
