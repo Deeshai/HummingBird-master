@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.codepath.apps.restclienttemplate.fragments.UserTimelineFragment;
 import com.codepath.apps.restclienttemplate.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -15,10 +17,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
 
     TwitterClient client;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvFollowers.setText(user.followersCount + "Followers");
         tvFollowing.setText(user.followingCount + "Following");
 
-        Glide.with(this).load(user.profileImageUrl).into(IVprofileImage);
+        Glide.with(this).load(user.profileImageUrl).bitmapTransform(new RoundedCornersTransformation(context, 150, 0)).into(IVprofileImage);
 
 
 
