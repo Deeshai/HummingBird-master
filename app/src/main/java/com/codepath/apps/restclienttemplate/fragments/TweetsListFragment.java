@@ -3,7 +3,6 @@ package com.codepath.apps.restclienttemplate.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +22,15 @@ import java.util.ArrayList;
  * Created by deeshaiesc on 7/3/17.
  */
 
-public class TweetsListFragment extends Fragment {
+public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAdapterListener {
+
+    public interface TweetSelectedListener
+    {
+        //handle tweet selection
+        void onTweetSelected(Tweet tweet);
+        void onImageSelected(Tweet tweet);
+    }
+
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
     RecyclerView RVtweet;
@@ -74,7 +81,7 @@ public class TweetsListFragment extends Fragment {
         tweets = new ArrayList<>();
 
         //construct the adapter from this datasource
-        tweetAdapter = new TweetAdapter(tweets);
+        tweetAdapter = new TweetAdapter(tweets, this);
 
         RVtweet.setLayoutManager(new LinearLayoutManager(getContext()));
         //RecyclerView setup (layout manager, user adapter)
@@ -83,15 +90,8 @@ public class TweetsListFragment extends Fragment {
         return v;
     }
 
-    public void nM
-            (Tweet tweet){
-
-        tweets.add(0,tweet);
-        tweetAdapter.notifyItemInserted(0);
-        RVtweet.getLayoutManager().scrollToPosition(0);
-    }
-
-    public void addItems(JSONArray response) {
+    public void addItems(JSONArray response)
+    {
         for (int i = 0; i < response.length(); i++) {
             //convert each object to a Tweet model
             //add that Tweet model to our data source
@@ -107,5 +107,20 @@ public class TweetsListFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(View view, int position, boolean isPic)
+    {
+        Tweet tweet = tweets.get(position);
+        if(!isPic)
+        {
+            ((TweetSelectedListener)getActivity()).onTweetSelected(tweet);
+        }
+        else
+        {
+            ((TweetSelectedListener)getActivity()).onImageSelected(tweet);
+        }
+
     }
 }

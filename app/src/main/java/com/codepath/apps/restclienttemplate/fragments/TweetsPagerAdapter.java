@@ -5,15 +5,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * Created by deeshaiesc on 7/3/17.
  */
 
-public class TweetsPagerAdapter extends FragmentPagerAdapter
+public class TweetsPagerAdapter extends SmartFragmentStatePagerAdapter
 {
 
     private String tabTitles[] = new String[] {"Home", "Mentions"};
     private Context context;
+    public ConcurrentHashMap<Integer, TweetsListFragment> mPageReferenceMap = new ConcurrentHashMap<>();
 
 
     public TweetsPagerAdapter(FragmentManager fm, Context context)

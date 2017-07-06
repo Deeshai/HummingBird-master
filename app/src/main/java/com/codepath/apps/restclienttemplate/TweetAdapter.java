@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,11 +29,19 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>
 
     private List <Tweet> mTweets;
     Context context;
+    private TweetAdapterListener mListener;
+
+    //define an interface required by the ViewHolder
+    public interface TweetAdapterListener
+    {
+        void onItemSelected(View view, int position, boolean isPick);
+    }
 
     //pass in the tweets array in the constructor
-    public TweetAdapter(List<Tweet> tweets)
+    public TweetAdapter(List<Tweet> tweets, TweetAdapterListener listener)
     {
         mTweets = tweets;
+        this.mListener = listener;
     }
 
     //for each row, inflate the layout and cache references into ViewHolder
@@ -49,7 +58,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>
 
     //bind the values on the position of the element
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(ViewHolder holder, final int position)
     {
         //get the data according to position
         Tweet tweet = mTweets.get(position);
@@ -59,7 +68,18 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>
         holder.TVbody.setText(tweet.body);
         holder.TVcreated.setText(tweet.relativeDate);
         holder.TVhandle.setText(tweet.user.screenName);
-        Glide.with(context).load(tweet.user.profileImageUrl).bitmapTransform(new RoundedCornersTransformation(context, 150, 0)).into(holder.IVprofileImage);
+
+        holder.IVprofileImage.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                mListener.onItemSelected(view, position, true);
+            }
+
+        });
+
+        Glide.with(context).load(tweet.user.profileImageUrl).bitmapTransform(new RoundedCornersTransformation(context, 200, 0)).into(holder.IVprofileImage);
 
     }
 
@@ -71,7 +91,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>
 
     //create ViewHolder class
 
-    public static class ViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder
     {
         @BindView(R.id.IVprofileImage) ImageView IVprofileImage;
         @BindView(R.id.TVuserName) TextView TVuserName;
@@ -85,6 +105,24 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>
 
             //perform findViewById lookups
             ButterKnife.bind(this,itemView);
+
+            //handle row click event
+            itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    if(mListener != null)
+                    {
+                        //get the position of row element
+                        int position = getAdapterPosition();
+
+                        //fire the listener callback
+                        mListener.onItemSelected(view, position, false);
+                    }
+                }
+
+            });
         }
 
     }

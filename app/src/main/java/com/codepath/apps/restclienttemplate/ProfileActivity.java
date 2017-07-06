@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.util.TextUtils;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -44,29 +45,59 @@ public class ProfileActivity extends AppCompatActivity {
         ft.commit();
 
         client = TwitterApp.getRestClient();
-        client.getUserInfo(new JsonHttpResponseHandler()
+        if(TextUtils.isEmpty(screenName))
         {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            client.getUserInfo(new JsonHttpResponseHandler()
+            {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                //deserialize the User object
-                try
-                {
-                    User user = User.fromJSON(response);
+                    //deserialize the User object
+                    try
+                    {
+                        User user = User.fromJSON(response);
 
-                    //set the title of the ActionBar based on the user information
-                    getSupportActionBar().setTitle(user.screenName);
+                        //set the title of the ActionBar based on the user information
+                        getSupportActionBar().setTitle(user.screenName);
 
-                    //populate the user headline
-                    populateUserHeadline(user);
+                        //populate the user headline
+                        populateUserHeadline(user);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+
                 }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
+            });
+        }
+        else
+        {
+            client.getTweeterInfo(screenName, new JsonHttpResponseHandler()
+            {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-            }
-        });
+                    //deserialize the User object
+                    try
+                    {
+                        User user = User.fromJSON(response);
+
+                        //set the title of the ActionBar based on the user information
+                        getSupportActionBar().setTitle(user.screenName);
+
+                        //populate the user headline
+                        populateUserHeadline(user);
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        }
+
     }
 
     public void populateUserHeadline(User user)
@@ -83,7 +114,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvFollowers.setText(user.followersCount + "Followers");
         tvFollowing.setText(user.followingCount + "Following");
 
-        Glide.with(this).load(user.profileImageUrl).bitmapTransform(new RoundedCornersTransformation(context, 150, 0)).into(IVprofileImage);
+        Glide.with(this).load(user.profileImageUrl).bitmapTransform(new RoundedCornersTransformation(context, 200, 0)).into(IVprofileImage);
 
 
 

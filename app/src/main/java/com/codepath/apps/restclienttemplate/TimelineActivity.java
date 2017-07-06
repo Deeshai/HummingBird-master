@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment;
 import com.codepath.apps.restclienttemplate.fragments.TweetsListFragment;
 import com.codepath.apps.restclienttemplate.fragments.TweetsPagerAdapter;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -28,15 +29,17 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements TweetsListFragment.TweetSelectedListener {
 
 
     private static final int REQUEST_CODE = 20 ;
     //private SwipeRefreshLayout swipeContainer;
     Menu  menu;
+    ViewPager vpPager;
+    TweetsPagerAdapter adapterViewPager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
@@ -61,14 +64,17 @@ public class TimelineActivity extends AppCompatActivity {
 //        swipeContainer.setRefreshing(false);
 
         //get the view pager
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        vpPager = (ViewPager) findViewById(R.id.viewpager);
 
         //set the adapter for the pager
-        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
+        adapterViewPager = new TweetsPagerAdapter(getSupportFragmentManager(), this);
+        vpPager.setAdapter(adapterViewPager);
 
         //setup TabLayout to use the view pager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
+
+        adapterViewPager.getRegisteredFragment(0);
 
     }
 
@@ -86,7 +92,9 @@ public class TimelineActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onClick(View view) {
+
+    public void onHum(View view)
+    {
         Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
         startActivityForResult(intent, REQUEST_CODE);
     }
@@ -102,7 +110,10 @@ public class TimelineActivity extends AppCompatActivity {
 
             Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
 
-            //fragmentTweetsList.nM(tweet);
+            // Pass new tweet into the home timeline and add to top of the list
+            HomeTimelineFragment fragmentHomeTweets =
+                    (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+            fragmentHomeTweets.appendTweet(tweet);
 
             Toast.makeText(this, "HUM!!!", Toast.LENGTH_SHORT).show();
 
@@ -114,8 +125,21 @@ public class TimelineActivity extends AppCompatActivity {
         //launch the profile view
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
-
     }
+
+    public void onImageSelected(Tweet tweet)
+    {
+        Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra("screen_name",tweet.user.screenName);
+        startActivity(i);
+    }
+
+    @Override
+    public void onTweetSelected(Tweet tweet)
+    {
+        Toast.makeText(this, tweet.body, Toast.LENGTH_SHORT).show();
+    }
+
 }
 
 

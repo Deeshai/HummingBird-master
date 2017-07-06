@@ -6,6 +6,7 @@
     >
 
     <ImageView
+        android:clickable="true"
         android:id="@+id/IVprofileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
