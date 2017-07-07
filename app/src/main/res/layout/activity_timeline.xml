@@ -21,11 +21,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="right"
-        android:onClick="onHum"
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="15dp"
+        android:onClick="onHum"
         android:src="@drawable/vector_compose_fab"
         app:background="@drawable/circle"
+        app:backgroundTint="@android:color/holo_green_light"
+        app:borderWidth="0dp"
+        app:elevation="12dp"
         app:fabSize="normal" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,11 +37,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/sliding_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="fixed" />
+        <android.support.design.widget.TabLayout
+            android:id="@+id/sliding_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:tabMode="fixed" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
