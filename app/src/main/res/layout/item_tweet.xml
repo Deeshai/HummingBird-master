@@ -27,9 +27,9 @@
         android:id="@+id/TVcreated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:text="TextView"
-        android:layout_below="@+id/TVuserName" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/TVbody"
@@ -45,9 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_alignRight="@id/TVuserName"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toEndOf="@+id/TVbody"
+        android:layout_marginStart="35dp" />
 
     <View
         android:layout_width="match_parent"

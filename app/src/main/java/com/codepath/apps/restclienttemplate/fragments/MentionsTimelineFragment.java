@@ -28,7 +28,8 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         populateTimeLine();
     }
 
-    private void populateTimeLine() {
+    @Override
+    public void populateTimeLine() {
         client.getMentionsTimeLine(new JsonHttpResponseHandler() {
 
             @Override
@@ -37,8 +38,10 @@ public class MentionsTimelineFragment extends TweetsListFragment {
                 //iterate through the JSON array
 
                 //for each entry, deserialize the JSON object
+                tweetAdapter.clear();
 
                 addItems(response);
+                swipeContainer.setRefreshing(false);
 
             }
 

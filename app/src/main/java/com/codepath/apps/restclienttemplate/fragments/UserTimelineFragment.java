@@ -39,7 +39,8 @@ public class UserTimelineFragment extends TweetsListFragment
         populateTimeLine();
     }
 
-    private void populateTimeLine()
+    @Override
+    public void populateTimeLine()
     {
         //comes from the activity
         String screenName = getArguments().getString("screen_name");

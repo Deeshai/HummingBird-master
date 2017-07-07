@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAdapterListener {
 
+
     public interface TweetSelectedListener
     {
         //handle tweet selection
@@ -34,6 +36,8 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
     RecyclerView RVtweet;
+
+    SwipeRefreshLayout swipeContainer;
     //inflation happens inside onCreateView
 
     @Nullable
@@ -42,36 +46,28 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
         //inflate the layout
         View v = inflater.inflate(R.layout.fragments_tweets_list, container, false);
 
-//        SwipeRefreshLayout swipeContainer;
-//
-//        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
-//
-//
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                // Your code to refresh the list here.
-//                // Make sure you call swipeContainer.setRefreshing(false)
-//                // once the network request has completed successfully
-//                tweetAdapter.clear();
-//                populateTimeLine();
-//
-//            }
-//
-//            private void populateTimeLine() {
-//                return;
-//            }
-//
-//
-//
-//        });
-//        // Configure the refreshing colors
-//        swipeContainer.setColorSchemeResources(android.R.color.holo_green_dark,
-//                android.R.color.holo_orange_light,
-//                android.R.color.black,
-//                android.R.color.holo_red_dark);
-//
-//        swipeContainer.setRefreshing(false);
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully
+                //tweetAdapter.clear();
+                populateTimeLine();
+
+            }
+
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_green_dark,
+                android.R.color.holo_orange_light,
+                android.R.color.black,
+                android.R.color.holo_red_dark);
+
+        //swipeContainer.setRefreshing(false);
 
 
         //find the RecyclerView
@@ -88,7 +84,14 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
         RVtweet.setAdapter(tweetAdapter);
 
         return v;
+
     }
+
+    public void populateTimeLine()
+    {
+        return;
+    }
+
 
     public void addItems(JSONArray response)
     {
@@ -96,8 +99,6 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
             //convert each object to a Tweet model
             //add that Tweet model to our data source
             //notify the adapter that we've add an item
-
-           // tweetAdapter.clear();
 
             try {
                 Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
@@ -108,6 +109,7 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
             }
         }
     }
+
 
     @Override
     public void onItemSelected(View view, int position, boolean isPic)
@@ -123,4 +125,5 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
         }
 
     }
+
 }

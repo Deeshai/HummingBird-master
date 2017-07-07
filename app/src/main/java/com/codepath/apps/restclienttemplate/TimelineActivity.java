@@ -137,7 +137,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
     @Override
     public void onTweetSelected(Tweet tweet)
     {
-        Toast.makeText(this, tweet.body, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(TimelineActivity.this, DetailsActivity.class);
+        intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+        startActivity(intent);
     }
 
 }
