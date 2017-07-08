@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="25dp"
+    android:layout_margin="8dp"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     >
 
@@ -20,16 +20,30 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_alignParentTop="true"
+        android:layout_marginRight="0dp"
         android:layout_toEndOf="@+id/IVprofileImage"
         android:text="TextView" />
+
+    <TextView
+        android:id="@+id/TVhandle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_toEndOf="@id/TVuserName"
+        android:text="TextView"
+        android:layout_alignParentTop="true" />
+
 
     <TextView
         android:id="@+id/TVcreated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:paddingLeft="3dp"
+        android:layout_alignRight="@+id/TVhandle"
+        android:layout_toEndOf="@id/TVhandle"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/TVbody"
@@ -38,23 +52,13 @@
         android:layout_marginLeft="5dp"
         android:text="TextView"
         android:layout_below="@+id/TVcreated"
+        android:paddingBottom="20dp"
         android:layout_alignStart="@+id/TVuserName" />
-
-    <TextView
-        android:id="@+id/TVhandle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/TVbody"
-        android:layout_marginStart="35dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@id/TVbody"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:background="@android:color/holo_green_light"
         android:layout_alignParentEnd="true" />
 
